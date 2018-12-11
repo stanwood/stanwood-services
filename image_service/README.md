@@ -14,7 +14,7 @@ Stores images in Google Cloud Storage and caches the urls.
 - [Google Cloud SDK](https://cloud.google.com/sdk/)
 - [Google App Engine Standard py2.7](https://cloud.google.com/appengine/docs/standard/python/)
 - [Python 2.7](https://www.python.org/downloads/release/python-2715/)
-- [Google Cloud Store](https://cloud.google.com/storage/)
+- [Google Cloud Storage](https://cloud.google.com/storage/)
 
 
 ## Project setup
@@ -33,7 +33,7 @@ $ pip install -r requirements-test.txt
 
 ## Project deployment
 
-## Update environment variables in `app.yaml`
+### Update environment variables in `app.yaml`
 ```yaml
 env_variables:
     JWT_SECRET: "XXX..."

@@ -40,4 +40,4 @@ libraries:
   version: latest
 
 env_variables:
-  JWT_SECRET: ""
+  JWT_SECRET:
