@@ -1,0 +1,8 @@
+queue:
+- name: default
+  rate: 10/s
+  bucket_size: 200
+
+- name: gcsimages
+  rate: 10/s
+  bucket_size: 200

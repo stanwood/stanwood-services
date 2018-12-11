@@ -1,0 +1,4 @@
+cron:
+- description: Daily clean up GCS images
+  url: /_ah/cron/cleanup-images
+  schedule: every day 0:00
