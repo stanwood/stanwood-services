@@ -1,0 +1,29 @@
+runtime: python27
+api_version: 1
+threadsafe: true
+
+builtins:
+- deferred: true
+
+handlers:
+- url: /_ah/queue/.*
+  script: queues.app
+  secure: always
+- url: /_ah/queue/deferred
+  script: google.appengine.ext.deferred.deferred.application
+  login: admin
+- url: .*
+  script: api.app
+  secure: always
+
+libraries:
+- name: ssl
+  version: latest
+- name: webapp2
+  version: latest
+- name: webob
+  version: latest
+
+env_variables:
+  IMAGE_SERVICE_NAMESPACE:
+  IMAGE_SERVICE_TOKEN:
