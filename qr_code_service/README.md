@@ -27,6 +27,10 @@ Get QR code url as location in redirect response with highest size
 curl -X GET "https://your-app-id.appspot.com/generate?data=https%3A%2F%2Fstanwood.io&version=40
 ```
 
+Get QR code direct image
+```bash
+curl -X GET "https://your-app-id.appspot.com/generate?data=https%3A%2F%2Fstanwood.io&format=image
+```
 ## Note
 
 The `version` parameter is an integer from 1 to 40 that controls the size of the QR Code (the smallest, version 1, is a 21x21 matrix). 

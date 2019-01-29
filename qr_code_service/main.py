@@ -6,7 +6,6 @@ import falcon
 import google.cloud.storage
 import qrcode
 from google.appengine.api import app_identity
-from google.appengine.api import memcache
 
 
 class GoogleCloudStorage(object):
@@ -47,17 +46,19 @@ class QrCodeGenerator(GoogleCloudStorage):
         version = req.get_param('version', required=False, default=1)
         resp_format = req.get_param('format', required=False)
 
-        url = memcache.get(req.query_string)
-        if not url:
-            image = self.build_image(data, version=version)
-            logging.debug(image)
+        image = self.build_image(data, version=version)
+        logging.debug(image)
 
-            buf = StringIO.StringIO()
-            image.save(buf, 'jpeg')
-            buf.seek(0)
+        buf = StringIO.StringIO()
+        image.save(buf, 'jpeg')
+        buf.seek(0)
 
-            url = self.upload_file('qrcodes/{}.jpeg'.format(data), buf, 'image/jpeg')
-            memcache.set(req.query_string, url, time=60*60*24)
+        if resp_format == 'image':
+            resp.body = buf.getvalue()
+            resp.content_type = 'image/jpeg'
+            return
+
+        url = self.upload_file('qrcodes/{}.jpeg'.format(data), buf, 'image/jpeg')
 
         if resp_format == 'json':
             resp.body = json.dumps(
@@ -68,6 +69,7 @@ class QrCodeGenerator(GoogleCloudStorage):
             )
             resp.content_type = 'application/json'
             resp.status = falcon.HTTP_200
+
         else:
             raise falcon.HTTPMovedPermanently(location=url)
 
