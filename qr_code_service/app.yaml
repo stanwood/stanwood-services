@@ -1,42 +1,34 @@
 api_version: 1
-
-automatic_scaling:
-  max_concurrent_requests: 3
-  max_instances: 10
+runtime: python27
+threadsafe: true
+instance_class: F1
 
 builtins:
 - deferred: true
-
-env_variables:
-  JWT_SECRET:
+- remote_api: true
 
 handlers:
-- static_files: favicon.ico
-  upload: favicon\.ico
-  url: /favicon\.ico
 - static_dir: static
   url: /static
 - login: admin
   script: google.appengine.ext.deferred.deferred.application
   url: /_ah/queue/deferred
-- login: admin
-  script: main.app
-  url: /.*/tokens
 - script: main.app
   url: .*
+- login: admin
+  script: main.app
+  url: /admin/.*
 
-instance_class: F2
 
 libraries:
 - name: jinja2
   version: latest
 - name: webapp2
   version: 2.5.2
+- name: pycrypto
+  version: latest
 - name: ssl
-  version: latest
+  version: 2.7.11
 - name: PIL
-  version: latest
+  version: "1.1.7"
 
-runtime: python27
-
-threadsafe: true
