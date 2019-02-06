@@ -1,0 +1,3 @@
+[submodule "pdf_service/pdf_api/lib/stanwood"]
+	path = pdf_service/pdf_api/lib/stanwood
+	url = git@github.com:stanwood/Stanwood_Python.git
