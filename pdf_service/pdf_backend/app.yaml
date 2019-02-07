@@ -26,4 +26,4 @@ readiness_check:
 
 
 env_variables:
-  GOOGLE_CLOUD_PROJECT: <google_cloud_project>
+  GOOGLE_CLOUD_PROJECT:
