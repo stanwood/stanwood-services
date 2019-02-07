@@ -23,7 +23,7 @@ import base64
 
 
 def test_create_token(app):
-    from models import authorization as auth_models
+    from image_service.models import authorization as auth_models
 
     namespace = 'my_namespace'
     response = app.get('/{}/tokens'.format(namespace))
@@ -37,7 +37,7 @@ def test_create_token(app):
 
 
 def test_create_token_same_namespace(app):
-    from models import authorization as auth_models
+    from image_service.models import authorization as auth_models
 
     namespace = 'my_namespace'
     response1 = app.get('/{}/tokens'.format(namespace))
