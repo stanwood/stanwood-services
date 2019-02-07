@@ -57,15 +57,18 @@ class DocumentsQueueHandler(webapp2.RequestHandler):
             request.update({
                 'location': response.headers['location'],
             })
-
-            response = yield ctx.urlfetch(
-                task['callback'],
-                method='POST',
-                payload=json.dumps(request),
-                headers={
-                    'Content-Type': 'application/json',
-                },
-            )
+            try:
+                response = yield ctx.urlfetch(
+                    task['callback'],
+                    method='POST',
+                    payload=json.dumps(request),
+                    headers={
+                        'Content-Type': 'application/json',
+                    },
+                )
+            except Exception as err:
+                logging.error(err.message)
+                return
 
             if response.status_code / 400 and retries < 6:
                 logging.error(response.content)

@@ -41,6 +41,7 @@ class Document(ndb.Model):
 
     @classmethod
     def split_document(cls, app_id, service, doc_id, timeout, key_urlsafe):
+        logging.debug(doc_id)
         response = urlfetch.fetch(
             'https://{service_name}-dot-{app_id}.appspot.com/split'.format(
                 service_name=service,
@@ -56,6 +57,8 @@ class Document(ndb.Model):
         if response.status_code != 200:
             logging.critical('PDF backend returned status code: {}'.format(str(response.status_code)))
             raise Exception(response.content)  # TODO
+
+        logging.debug(response.content)
 
         response = json.loads(response.content)
         response = ndb.put_multi([
