@@ -24,5 +24,5 @@ def render_yaml(file_name):
 if '__main__' == __name__:
 
     # TODO: Update list of yaml files to be populated
-    for file_name in ('image_service/app.yaml', ):
+    for file_name in ('image_service/app.yaml', 'pdf_service/pdf_api/app.yaml'):
         render_yaml(file_name)
