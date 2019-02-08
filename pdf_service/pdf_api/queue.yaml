@@ -3,3 +3,7 @@ queue:
   rate: 1/s
   max_concurrent_requests: 2
   target: backend
+
+- name: callback
+  rate: 1/s
+  max_concurrent_requests: 2

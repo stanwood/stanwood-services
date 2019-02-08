@@ -153,7 +153,8 @@ class PageHandler(webapp2.RequestHandler):
             request = {}
 
         taskqueue.add(
-            queue_name='documents',
+            url='/_ah/queue/documents',
+            queue_name='callback',
             payload=json.dumps({
                 'callback': request.pop('callback', None),
                 'path': self.request.path_qs,
