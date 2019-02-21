@@ -92,4 +92,5 @@ ENV/
 ext/
 variables
 app_prod.yaml
+app_dev.yaml
 .DS_Store
