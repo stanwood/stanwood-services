@@ -79,10 +79,11 @@ class MockHandler:
 
         return response
 
-    def __call__(self, req, resp, github_path):
-        api_response = self._fetch(
-            f"https://api.github.com/repos/{github_path}?{req.query_string}"
-        )
+    def __call__(self, req, resp, github_ref, github_path):
+        url = f"https://api.github.com/repos/{config.GITHUB_REPOSITORY}/contents/{github_path}?ref={github_ref}"
+        logging.debug(url)
+
+        api_response = self._fetch(url)
         try:
             response = base64.b64decode(api_response["content"])
         except KeyError:

@@ -86,25 +86,19 @@ Note
 ### Mock API service
 
 
-#### Get file content by sending GET request from default branch (usually master)
+### Get file content by sending GET request from selected branch/tag/commit
 
 ```bash
 $ curl -X GET \
-    "https://<PROJECT_ID>.appspot.com/v1/mock/<ORGANIZATION_NAME>/<REPO_NAME>/contents/<PATH_TO_FILE>"
+    "https://<PROJECT_ID>.appspot.com/v1/mock/ref/<REF_NAME>/<PATH_TO_FILE>"
 ```
 
-#### Get file content by sending GET request from selected branch/tag/commit
-```bash
-$ curl -X GET \
-    "https://<PROJECT_ID>.appspot.com/v1/mock/<ORGANIZATION_NAME>/<REPO_NAME>/contents/<PATH_TO_FILE>?ref=<REF_NAME>"
-```
-
-
-#### Get file content by sending mock request (any HTTP method)
+### Get file content by sending mock request (any HTTP method)
 
 ```bash
 $ curl -X GET/POST/DELETE/PUT/PATCH/... \
     --data '{"happy": true}' \
     -H "Content-Type: application/json" \
-    "https://<PROJECT_ID>.appspot.com/v1/mock/<ORGANIZATION_NAME>/<REPO_NAME>/contents/<PATH_TO_FILE>"
+    "https://<PROJECT_ID>.appspot.com/v1/mock/ref/<REF_NAME>/<PATH_TO_FILE>"
 ```
+

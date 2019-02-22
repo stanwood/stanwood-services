@@ -5,6 +5,7 @@ env_variables:
   GITHUB_APP_ID: ""
   GITHUB_PRIVATE_KEY: ""
   GITHUB_INSTALLATION_ID: ""
+  GITHUB_REPOSITORY: ""
 
 
 handlers:
