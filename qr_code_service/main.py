@@ -33,8 +33,8 @@ class QrCodeGenerator(GoogleCloudStorage):
         qr = qrcode.QRCode(
             version=version,
             error_correction=qrcode.constants.ERROR_CORRECT_L,
-            box_size=10,
-            border=4,
+            box_size=8,
+            border=0,
         )
         qr.add_data(data)
         qr.make(fit=True)
@@ -46,7 +46,7 @@ class QrCodeGenerator(GoogleCloudStorage):
         version = req.get_param('version', required=False, default=1)
         resp_format = req.get_param('format', required=False)
 
-        image = self.build_image(data, version=version)
+        image = self.build_image(data, version=int(version))
         logging.debug(image)
 
         buf = StringIO.StringIO()
@@ -58,7 +58,7 @@ class QrCodeGenerator(GoogleCloudStorage):
             resp.content_type = 'image/jpeg'
             return
 
-        url = self.upload_file('qrcodes/{}.jpeg'.format(data), buf, 'image/jpeg')
+        url = self.upload_file('qrcodes/{}/{}.jpeg'.format(version, data), buf, 'image/jpeg')
 
         if resp_format == 'json':
             resp.body = json.dumps(
