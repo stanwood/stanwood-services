@@ -34,7 +34,7 @@ class QrCodeGenerator(GoogleCloudStorage):
             version=version,
             error_correction=qrcode.constants.ERROR_CORRECT_L,
             box_size=8,
-            border=0,
+            border=1,
         )
         qr.add_data(data)
         qr.make(fit=True)
