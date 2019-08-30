@@ -45,6 +45,7 @@ class Image(storage.GoogleCloudStorage, webapp2.RequestHandler):
         url = self.request.get('url')
         crop_data = self.request.get('crop')
         width = self.request.get('width', '')
+        trim_whitespaces = self.request.get('trim_whitespaces')
 
         if not url:
             error_message = 'Missing parameter: url'
@@ -76,6 +77,7 @@ class Image(storage.GoogleCloudStorage, webapp2.RequestHandler):
                     url,
                     width,
                     crop_data,
+                    trim_whitespaces,
                 )
                 images_models.ImageUrl(
                     key=image_url_key,

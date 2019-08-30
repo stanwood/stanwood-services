@@ -30,7 +30,8 @@ from os.path import basename
 from urlparse import urlparse
 
 import google.cloud.storage
-import PIL.Image
+from PIL import Image as PilImage
+from PIL import ImageChops
 import webapp2
 from google.appengine.api.app_identity import app_identity
 from google.appengine.api import urlfetch
@@ -44,12 +45,13 @@ class Image(object):
         self.bucket = bucket
         self.hash_key = hash_key
 
-    def __call__(self, folder_name, image_url, resize_width, crop_data):
+    def __call__(self, folder_name, image_url, resize_width, crop_data, trim_whitespaces):
         self.image_url = image_url
         image_data = self.fetch_image(folder_name, image_url)
         gcs_image = self.upload_blob(*image_data,
                                      resize_width=resize_width,
-                                     crop_data=crop_data)
+                                     crop_data=crop_data,
+                                     trim_whitespaces=trim_whitespaces)
         return gcs_image
 
     @staticmethod
@@ -67,22 +69,35 @@ class Image(object):
     def crop_image(image, top, left, width, height):
         return image.crop((left, top, width, height))
 
+    @staticmethod
+    def trim_whitespaces(image):
+        bg = PilImage.new(image.mode, image.size, image.getpixel((0, 0)))
+        diff = ImageChops.difference(image, bg)
+        diff = ImageChops.add(diff, diff, 2.0, -100)
+        bbox = diff.getbbox()
+        if bbox:
+            return image.crop(bbox)
+        return image
+
     def upload_blob(self, folder_name, filename, extension, content_type,
-                    content, resize_width=None, pubic=True, crop_data=None):
+                    content, resize_width=None, pubic=True, crop_data=None, trim_whitespaces=None):
         file_path = ''.join([folder_name, '/', filename, extension])
 
         image_bytes = io.BytesIO(content)
         del content
-        image = PIL.Image.open(image_bytes)
+        image = PilImage.open(image_bytes)
 
         if resize_width:
             width, height = image.size
             new_height = resize_width * height / width
-            image = image.resize((resize_width, new_height), PIL.Image.ANTIALIAS)
+            image = image.resize((resize_width, new_height), PilImage.ANTIALIAS)
 
         if crop_data:
             top, left, width, height = map(int, crop_data.split(','))
             image = self.crop_image(image, top, left, width, height)
+
+        if trim_whitespaces:
+            image = self.trim_whitespaces(image)
 
         buf = StringIO.StringIO()
         mime_type = content_type.upper().split('/')[-1]
