@@ -3,6 +3,7 @@
 Contains various services used in stanwood. 
 
 Includes:
+* [html2pdf-service](/html2pdf_service) - Converts html to pdf
 * [image-service](/image_service) - Stores and caches images using GCP. Allows to resize and crop images.
 * [pdf-service](/pdf_service) - Splits PDF file with multiple pages into separate images.
 * [qr-code-service](/qr_code_service) - generates QR code for given data.
