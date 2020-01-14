@@ -106,6 +106,7 @@ class Image(object):
             mime_type = 'JPEG'
 
         image.save(buf, mime_type, quantity=100)
+
         width, height = image.size
         del image
 

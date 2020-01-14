@@ -72,13 +72,18 @@ class Image(storage.GoogleCloudStorage, webapp2.RequestHandler):
                     hash_key=hash_key
                 )
 
-                gcs_image_url, gcs_path, content_type = get_resize_url(
-                    namespace,
-                    url,
-                    width,
-                    crop_data,
-                    trim_whitespaces,
-                )
+                try:
+                    gcs_image_url, gcs_path, content_type = get_resize_url(
+                        namespace,
+                        url,
+                        width,
+                        crop_data,
+                        trim_whitespaces,
+                    )
+                except SystemError:
+                    self.response.status_int = 400
+                    self.response.write("Error during image resizing")
+                    return
                 images_models.ImageUrl(
                     key=image_url_key,
                     gcs_url=gcs_image_url,
