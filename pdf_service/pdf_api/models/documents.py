@@ -28,7 +28,6 @@ from google.appengine.ext import deferred
 from google.appengine.ext import ndb
 import stanwood.ndb
 
-
 class Document(ndb.Model):
 
     DEADLINE = 60

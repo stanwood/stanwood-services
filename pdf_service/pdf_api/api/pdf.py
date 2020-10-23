@@ -53,10 +53,8 @@ class PagesHandler(webapp2.RequestHandler):
         :return: Pages count, if PDF is already splitted or splitted using sync option. Otherwise it returns 202 http
             status code with message that task was triggered and is processed.
         """
-
         async = self.request.get('async', False)
 
-        document = urllib.unquote_plus(document)
         document = Document(
             id=document,
         )
@@ -107,7 +105,6 @@ class PageHandler(webapp2.RequestHandler):
     @ndb.toplevel
     def get(self, document, page, format):
 
-        document = urllib.unquote_plus(document)
         document = Document(
             id=document,
         )
